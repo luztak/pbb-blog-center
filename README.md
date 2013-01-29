@@ -1,6 +1,10 @@
 PBB-Blog-Center
 ===============
 
-It's a easy way to aggregation PBB members' blog.You can find all of PBB members' blog posts by this way.
+It's a collection of blog feeds of the Inkflame core members.
 
-PBB:http://pbb.whouz.com
+It's an easy to know about our thoughts,ideas,technogical improvements.
+
+
+
+Visit our forum: http://pbb.whouz.com
