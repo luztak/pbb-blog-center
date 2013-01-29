@@ -3,6 +3,10 @@ __author__ = "luztak"
 
 """The list of our blogs and blog feeds."""
 
+AUTHOR_NAME = 0
+BLOG_URL = 1
+FEED_URL = 2
+
 list = [
     ("whtsky", "http://whouz.com", "http://whouz.com/feed.xml"),
     ("PotatoBrother", "http://ipotato.me", "http://ipotato.me/feed.xml"),
