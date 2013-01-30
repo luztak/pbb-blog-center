@@ -20,14 +20,15 @@ feed[title,
 
 def get_feeds(feedurl):
     """Return original data fetched by feedparser."""
-    origins = feedparser.parse(feedurl).entries
+    entries = feedparser.parse(feedurl).entries
     return [{
-        title:entry.title,
-        #id:entry.id,
-        url:entry.content.base,
-        published:convert_time(entry.published_parsed),
-        updated:convert_time(entry.updated_parsed),
-        summary:entry.summary or entry.content.value,
-        content:entry.content
+        'title':entry.title,
+        #'id':entry.id,
+        #'author':'',
+        'url':entry.content.base,
+        'published':convert_fptime(entry.published_parsed),
+        'updated':convert_fptime(entry.updated_parsed),
+        'summary':entry.summary or entry.content.value,
+        'content':entry.content.value
         }
-        for entry in origins]
+        for entry in entries]
