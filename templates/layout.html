@@ -18,8 +18,8 @@
                 <span class="icon-bar"></span>
             </a>
             <a class="brand" href="/">PBB Blog Center</a>
-            <div class="nav-collapse">
-                <ul class="nav pull-right">
+            <div class="nav-collapse pull-right">
+                <ul class="nav">
                     {% if current_user %}
                     <li><a href="/account">Manage Account</a></li>
                     <li><a href="http://pbb.whouz.com/signout?next={{ url_escape(request.uri) }}">Sign Out</a></li>
