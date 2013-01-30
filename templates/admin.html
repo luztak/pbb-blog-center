@@ -2,36 +2,42 @@
 <html>
     <head>
         <meta charset="utf-8">
-        <title>提交Feed</title>
-        <link rel="stylesheet" href="../static/css/bootstrap.min.css" type="text/css" />
-        <link rel="stylesheet" href="../static/css/bootstrap-responsive.min.css" type="text/css" />
+        <title>Admin</title>
+        <link rel="stylesheet" href="../static/css/style.css" type="text/css" />
+        <style>
+        body{
+            margin-top: 20px;
+        }
+        </style>
     </head>
 
     <body>
+        <div class="span9">
+        <div class="box">
         <form class="form-horizontal">
             <fieldset>
-                <legend>管理面板</legend>
+                <legend>Admin</legend>
                 <div class="control-group">
-                    <label class="control-label" for="appendedPrependedInput">管理用户名</label>
+                    <label class="control-label" for="appendedPrependedInput">Change Username</label>
                     <div class="controls">
                         <div class="input-append">
-                        <input class="span2" id="appendedPrependedInput" size="16" type="text"><button class="btn" type="button">更改</button>
+                        <input class="span2" id="appendedPrependedInput" size="16" type="text"><button class="btn" type="button">Change</button>
                         </div>
                     </div>
                 </div>
                 <div class="control-group">
-                    <label class="control-label" for="appendedPrependedInput">管理密码</label>
+                    <label class="control-label" for="appendedPrependedInput">Change Password</label>
                     <div class="controls">
                         <div class="input-append">
-                        <input class="span2" id="appendedPrependedInput" size="16" type="text"><button class="btn" type="button">更改</button>
+                        <input class="span2" id="appendedPrependedInput" size="16" type="text"><button class="btn" type="button">Change</button>
                         </div>
                     </div>
                 </div>
                 <div class="control-group">
-                    <label class="control-label" for="appendedPrependedInput">Feed地址</label>
+                    <label class="control-label" for="appendedPrependedInput">Feed Url</label>
                     <div class="controls">
                         <div class="input-append">
-                        <input class="span2" id="appendedPrependedInput" size="16" type="text"><button class="btn" type="button">添加</button>
+                        <input class="span2" id="appendedPrependedInput" size="16" type="text"><button class="btn" type="button">Change</button>
                         </div>
                     </div>
                 </div>
@@ -39,12 +45,21 @@
                     <table class="table table-bordered">
                         <thead>
                             <tr>
-                            <th>序号</th>
-                            <th>作者名</th>
-                            <th>地址</th>
+                            <th>No.</th>
+                            <th>Author</th>
+                            <th>Url</th>
                             </tr>
                         </thead>
+                        <tbody>
+                        <tr>
+                            <td>feed_count</td>
+                            <td>feed_author</td>
+                            <td>feed_url</td>
+                        </tr>
+                        </tbody>
                     </table>
                 </div>
         </form>
+        </div>
+        </div>
     </body>
