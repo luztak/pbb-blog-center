@@ -28,7 +28,7 @@ class HomeHandler(tornado.web.RequestHandler):
         if member:
             current_user = member
         entries = db.entries.find()
-        self.render("homepage.html,current_user=current_user,entries=entries)
+        self.render("homepage.html", current_user=current_user, entries=entries)
 
 
 class DashboardHandler(tornado.web.RequestHandler):
