@@ -1,0 +1,24 @@
+{% extends 'layout.html' %}
+{% block body %}
+<div class="span12">
+    <div class="page-header">
+        <h1>Feeds</h1>
+    </div>
+</div>
+<div class="span12">
+    {% for entry in entries %}
+    <div class="list">
+        <div class="list-content">
+            <h3><a href="{{ entry['url'] }}">{{ entry['title'] }}</a></h3>
+            <p><!--by --> at {{ entry['published'] }}
+            {% if entry['updated'] %}
+            <span class="muted">{{ entry['updated'] }}</span>
+            {% end %}
+            </p>
+            <p>{{ entry['summary'] }}</p>
+            <p class="bold"><a href="{{ entry['url'] }}</a></p>
+        </div>
+    </div>
+    {% end %}
+</div>
+{% end %}
