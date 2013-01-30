@@ -4,6 +4,7 @@ __author__ = "luztak"
 """Main."""
 
 import pymongo
+import tornado.web
 
 db_settings = [
     '127.0.0.1',
@@ -30,7 +31,7 @@ class HomeHandler(tornado.web.RequestHandler):
         self.render("homepage.html,current_user=current_user,entries=entries)
 
 
-class AccountManagementHandler(tornado.web.RequestHandler):
+class DashboardHandler(tornado.web.RequestHandler):
     def get(self):
         current_user = self.get_secure_cookie("user")
         
