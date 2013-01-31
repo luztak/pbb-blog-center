@@ -8,7 +8,7 @@ import tornado.web
 import tornado.ioloop
 from tornado.options import define, options, parse_command_line
 
-define("server_port", default=12307, help="Port of server service")
+define("port"), default=12307, help="Port of server service")
 
 define("db_host", default="127.0.0.1", help="Host of MongoDB")
 define("db_port", default=12306, help="Port of MongoDB")
@@ -20,7 +20,7 @@ define("cookie_secret", default=cookie_secret, help="Cookie Secret")
 db = pymongo.Connection(
     options["db_host"],
     options["db_port"]
-    )[options["db_name"]
+    )[options["db_name"]]
 
 
 class BaseHanlder(tornado.web.RequestHandler):
