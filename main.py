@@ -14,13 +14,13 @@ define("db_host", default="127.0.0.1", help="Host of MongoDB")
 define("db_port", default=12306, help="Port of MongoDB")
 define("db_name", default="blogcenter", help="Name of base of MongoDB")
 
+cookie_secret = "hello, world but not you, hacker."
+define("cookie_secret", default=cookie_secret, help="Cookie Secret")
 
 db = pymongo.Connection(
     options["db_host"],
     options["db_port"]
     )[options["db_name"]
-
-cookie_secret = "hello, world but not to you, hacker."
 
 
 class BaseHanlder(tornado.web.RequestHandler):
