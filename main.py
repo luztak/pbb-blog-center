@@ -25,12 +25,8 @@ cookie_secret = "hello, world but not to you, hacker."
 
 class BaseHanlder(tornado.web.RequestHandler):
     def get_current_user(self):
-        current_user = None
         u = self.get_secure_cookie("user")
-        member = db.members.find.find({'password':u})
-        if member:
-            current_user = member
-        return current_user
+        return db.members.find.find({'password':u})
 
     def get_entries(self, filter_type=None, filter_content=None):
         if filter_type:
