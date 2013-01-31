@@ -38,9 +38,8 @@ class BaseHanlder(tornado.web.RequestHandler):
 
 class HomeHandler(BaseHandler):
     def get(self, filter_type=None, filter_content=None):
-        current_user = self.get_current_user()
         entries = self.get_entries(filter_type, filter_content)
-        self.render("homepage.html", current_user=current_user, entries=entries)
+        self.render("homepage.html", entries=entries)
 
 
 class DashboardHandler(BaseHandler):
