@@ -8,6 +8,7 @@ import tornado.web
 
 settings = {
     'port':12307,
+    }
     
 
 db_settings = [
