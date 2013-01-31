@@ -5,27 +5,25 @@ __author__ = "luztak"
 
 import pymongo
 import tornado.web
+import tornado.ioloop
+from tornado.options import define, options, parse_command_line
 
-settings = {
-    'port':12307,
-    }
-    
+define("server_port", default=12307, help="Port of server service")
 
-db_settings = [
-    '127.0.0.1',
-    12306,
-    ''
-    ]
+define("db_host", default="127.0.0.1", help="Host of MongoDB")
+define("db_port", default=12306, help="Port of MongoDB")
+define("db_name", default="blogcenter", help="Name of base of MongoDB")
+
 
 db = pymongo.Connection(
-    db_settings[0],
-    db_settings[1]
-    )[db_settings[2]]
+    options["db_host"],
+    options["db_port"]
+    )[options["db_name"]
 
 cookie_secret = "hello, world but not to you, hacker."
 
 
-class BaseHanldwr(tornado.web.Application):
+class BaseHanlder(tornado.web.RequestHandler):
     def get_current_user(self):
         current_user = None
         u = self.get_secure_cookie("user")
@@ -33,7 +31,7 @@ class BaseHanldwr(tornado.web.Application):
         if member:
             current_user = member
         return current_user
-    
+
     def get_entries(self, filter_type=None, filter_content=None):
         if filter_type:
             entries = db.entries.find({filter_type:filter_content})
@@ -41,11 +39,13 @@ class BaseHanldwr(tornado.web.Application):
             entries = db.entries.find()
         return entries
 
+
 class HomeHandler(BaseHandler):
     def get(self, filter_type=None, filter_content=None):
         current_user = self.get_current_user()
         entries = self.get_entries(filter_type, filter_content)
         self.render("homepage.html", current_user=current_user, entries=entries)
+
 
 class DashboardHandler(BaseHandler):
     def get(self):
@@ -53,10 +53,9 @@ class DashboardHandler(BaseHandler):
             self.redirect("/")
             return
         self.render("dashboard.html")
-
     def post(self, action=None, action_data=None):
         if not self.get_current_user():
-            self.redirect("/") #how to name this......?
+            self.redirect("/")
             return
         if not action or action_data:
             self.flush_message("Please choose an action!")
@@ -85,5 +84,6 @@ urls = [
 blogcenter = tornado.web.Application(urls)
 
 if __name__ == "__main__":
-    blogcenter.listen(settings['port'])
+    parse_command_line()
+    blogcenter.listen(options['server_port'])
     tornado.ioloop.IOLoop.Instance.start()
