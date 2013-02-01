@@ -56,12 +56,7 @@ class DashboardHandler(BaseHandler):
             self.flush_message("Please choose an action!")
             self.redirect("/dashboard") #not good -- hard coded
             return
-        if action == "changepassword":
-            #see what PBB does here.
-            self.flush_message("Password successfully changed.")
-            self.redirect("/dashboard")
-            return
-        elif action == "changefeed":
+        if action == "changefeed":
             flag = self.change_feed(action_data)
             if flag:
                 self.flush_message("Feed successfully changed.")
