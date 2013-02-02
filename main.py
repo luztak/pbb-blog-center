@@ -42,29 +42,41 @@ class HomeHandler(BaseHandler):
         self.render("homepage.html", entries=entries)
 
 
+
 class DashboardHandler(BaseHandler):
     def get(self):
-        if not self.get_current_user():
+        if not self.current_user: 
             self.redirect("/")
             return
         self.render("dashboard.html")
+    
     def post(self, action=None, action_data=None):
-        if not self.get_current_user():
+        if not self.current_user: 
             self.redirect("/")
             return
         if not action or action_data:
             self.flush_message("Please choose an action!")
             self.redirect("/dashboard") #not good -- hard coded
-            return
-        if action == "changefeed":
+        elif action == "changefeed":
             flag = self.change_feed(action_data)
             if flag:
-                self.flush_message("Feed successfully changed.")
+                self.flush_message("Feed changed successfully.")
             else:
                 self.flush_message("Feed isn't changed while an error occurs.")
             self.redirect("/dashboard")
             return
-
+    
+    def change_feed(self, feedurl): 
+        def get_old(author):
+            from list import *
+            return feedlist[author][FEED_URL]
+        
+        old_url = get_old(self.current_useru['username'])
+        f = open("list.py").read()
+        f = f.replace(old_url, feedurl))
+        open("list.py", "w").write(f)
+        return feedurl in open("list.py").read()
+        
 
 urls = [
     (r'/', HomeHandler),
