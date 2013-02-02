@@ -4,6 +4,7 @@ __author__ = "luztak"
 """Utils."""
 
 import feedparser
+import datetime
 
 """Our feed format:
 feed[title,
@@ -32,3 +33,13 @@ def get_feeds(feedurl):
         'content':entry.content.value
         }
         for entry in entries]
+
+
+def convert_fptime(fptime): 
+    return int(time.mktime(datetime.datetime(
+        fptime[0],
+        fptime[1],
+        fptime[2],
+        fptime[3],
+        fptime[4],
+        fptime[5]).timetuple()))
