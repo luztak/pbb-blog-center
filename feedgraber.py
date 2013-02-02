@@ -6,7 +6,7 @@ Run in crontab.
 """
 
 from list import *
-import utils
+from utils import *
 import db
 
 class feedgraber(object): 
