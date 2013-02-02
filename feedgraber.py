@@ -14,7 +14,7 @@ class feedgraber(object):
         grablist = []
         for author in authors: 
             for feedy in feedlist: 
-                if feedy[AUTHOR_NAME] is author: 
+                if feedy[AUTHOR_NAME] == author: 
                     grablist.append(
                         (feedy[AUTHOR_NAME],
                         feedy[FEED_URL]
