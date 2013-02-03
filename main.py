@@ -69,7 +69,7 @@ class DashboardHandler(BaseHandler):
             import feedlist
             return feedlist.feedlist[author][feedlist.FEED_URL]
 
-        old_url = get_old(self.current_useru['username'])
+        old_url = get_old(self.current_user['username'])
         f = open("list.py").read()
         f = f.replace(old_url, feedurl)
         open("list.py", "w").write(f)
