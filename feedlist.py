@@ -10,5 +10,4 @@ FEED_URL = 2
 feedlist = [
     ("whtsky", "http://whouz.com", "http://whouz.com/feed.xml"),
     ("PotatoBrother", "http://ipotato.me", "http://ipotato.me/feed.xml"),
-    ("linyis", "http://linyis.tk", "http://linyis.tk/feed.xml")
-    ]
+    ("linyis", "http://linyis.tk", "http://linyis.tk/feed.xml")]

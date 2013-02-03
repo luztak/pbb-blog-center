@@ -4,9 +4,10 @@ __author__ = "luztak"
 """DB shell of Blog Center.
 """
 
-class db(object): 
+
+class db(object):
     def __init__(self):
         pass
-    
-    def update(self, record): 
+
+    def update(self, record):
         pass

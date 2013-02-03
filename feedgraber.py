@@ -5,46 +5,42 @@ __author__ = "luztak"
 Run in crontab.
 """
 
-from list import *
-from utils import *
-import db
+import feedlist
+import utils
+import db.db as data
 
-class feedgraber(object): 
-    def __init__(self, authors): 
+
+class feedgraber(object):
+    def __init__(self, authors):
         grablist = []
-        for author in authors: 
-            for feedy in feedlist: 
-                if feedy[AUTHOR_NAME] == author: 
-                    grablist.append(
-                        (feedy[AUTHOR_NAME],
-                        feedy[FEED_URL]
-                        ))
+        for author in authors:
+            for feedy in feedlist.feedlist:
+                if feedy[feedlist.AUTHOR_NAME] == author:
+                    grablist.append((feedy[feedlist.AUTHOR_NAME],
+                        feedy[feedlist.FEED_URL]))
         self.grablist = grablist
-    
+
     def grab(self):
         grabbed = []
-        for grabby in self.grablist: 
+        for grabby in self.grablist:
             grabbed.append(
                 (grabby[0],
-                get_feeds(grabby[1])
-                ))
+                utils.get_feeds(grabby[1])))
         self.grabbed = grabbed
-    
-    def intodb(self): 
-        db = db.db()
-        for author in self.grabbed: 
-            for feed in author[1]: 
+
+    def intodb(self):
+        db = data()
+        for author in self.grabbed:
+            for feed in author[1]:
                 db.update(
-                    {'member':author[0],
-                    'title':feed.title,
-                    'url':feed.url,
-                    'published':feed.published,
-                    'updated':feed.updated,
-                    'summary':feed.summary,
-                    'content':feed.content
-                    })
-    
-    def run():
+                    {'member': author[0],
+                    'title': feed.title,
+                    'url': feed.url,
+                    'published': feed.published,
+                    'updated': feed.updated,
+                    'summary': feed.summary,
+                    'content': feed.content.value})
+
+    def run(self):
         self.grab()
         self.intodb()
-            
