@@ -33,7 +33,26 @@ class BaseHandler(tornado.web.RequestHandler):
         else:
             entries = db.entries.find()
         return entries
-
+        
+    @property
+    def messages(self):
+        if not hasattr(self, '_messages'):
+            messages = self.get_secure_cookie('bc_flash_messages')
+                self._messages = []
+            if messages:
+                self._messages = tornado.escape.json_decode(messages)
+            return self._messages
+    
+    def flash(self, message, type='error'):
+        self.messages.append((type, message))
+        self.set_secure_cookie('bc_flash_messages',
+            tornado.escape.json_encode(self.messages))
+    
+    def get_flashed_messages(self):
+        messages = self.messages
+        self._messages = []
+        self.clear_cookie('bc_flash_messages')
+        return messages
 
 class HomeHandler(BaseHandler):
     def get(self, filter_type=None, filter_content=None):
@@ -53,14 +72,14 @@ class DashboardHandler(BaseHandler):
             self.redirect("/")
             return
         if not action or action_data:
-            self.flush_message("Please choose an action!")
+            self.flash_message("Please choose an action!")
             self.redirect("/dashboard")
         elif action == "changefeed":
             flag = self.change_feed(action_data)
             if flag:
-                self.flush_message("Feed changed successfully.")
+                self.flash_message("Feed changed successfully.")
             else:
-                self.flush_message("Feed isn't changed while an error occurs.")
+                self.flash_message("Feed isn't changed while an error occurs.")
             self.redirect("/dashboard")
             return
 
