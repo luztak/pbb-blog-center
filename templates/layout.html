@@ -36,6 +36,13 @@
     <div class="container">
         <div class="row">
         {% block content %}
+        <div class="span12" id="messages">
+            {% for type, msg in handler.get_flashed_messages() %}
+            <div class="alert alert-{{type}}">
+                {{ _(msg) }}
+            </div>
+            {% end %}
+        </div>
         {% end %}
         </div>
         <div class="span12" id="footer">
