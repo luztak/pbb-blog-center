@@ -29,7 +29,9 @@ def get_feeds(feedurl):
         #'author': '',
         'url': entry.content.base,
         'published': convert_fptime(entry.published_parsed),
+        'published_atom': entry.published,
         'updated': convert_fptime(entry.updated_parsed),
+        'updated_atom': entry.updated,
         'summary': entry.summary or entry.content.value,
         'content': entry.content.value}
         for entry in entries]
