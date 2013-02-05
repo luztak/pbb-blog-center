@@ -7,11 +7,11 @@ Run in crontab.
 
 import feedlist
 import utils
-from db import dbase
+from main import BaseHandler
 
 
-class feedgraber(object):
-    def __init__(self, authors):
+class feedgraber(BaseHandler):
+    def init(self, authors):
         grablist = []
         for author in authors:
             for feedy in feedlist.feedlist:
@@ -48,5 +48,6 @@ class feedgraber(object):
                     )
 
     def run(self):
+        self.init()
         self.grab()
         self.intodb()

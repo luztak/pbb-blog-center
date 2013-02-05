@@ -3,6 +3,7 @@ __author__ = "luztak"
 
 """Main."""
 
+import pymongo
 import tornado.web
 import tornado.ioloop
 import tornado.escape
@@ -19,7 +20,9 @@ define("cookie_secret", default=cookie_secret, help="Cookie Secret")
 
 class BaseHandler(tornado.web.RequestHandler):
     def __init__(self):
-        self.db = dbase()
+        self.db = pymongo.Connection(
+            options["db_host"],
+            options["db_port"])[options["db_name"]]
 
     def get_current_user(self):
         u = self.get_secure_cookie("user")
