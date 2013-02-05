@@ -3,48 +3,46 @@ __author__ = "luztak"
 
 """Main."""
 
-import pymongo
 import tornado.web
 import tornado.ioloop
+import tornado.escape
 from tornado.options import define, options, parse_command_line
+from db import dbase
+
 
 define("port", default=12307, help="Port of server service")
 
-define("db_host", default="127.0.0.1", help="Host of MongoDB")
-define("db_port", default=12306, help="Port of MongoDB")
-define("db_name", default="blogcenter", help="Name of base of MongoDB")
 
 cookie_secret = "hello, world but not you, hacker."
 define("cookie_secret", default=cookie_secret, help="Cookie Secret")
 
-db = pymongo.Connection(
-    options["db_host"],
-    options["db_port"])[options["db_name"]]
-
 
 class BaseHandler(tornado.web.RequestHandler):
+    def __init__(self):
+        self.db = dbase()
+
     def get_current_user(self):
         u = self.get_secure_cookie("user")
-        return db.members.find.find({'password': u})
+        return self.db.members.find({'password': u})
 
     def get_entries(self, filter_type=None, filter_content=None):
         if filter_type:
-            entries = db.entries.find({filter_type: filter_content})
+            entries = self.db.entries.find({filter_type: filter_content})
         else:
-            entries = db.entries.find()
+            entries = self.db.entries.find()
         return entries
-        
+
     @property
     def messages(self):
         if not hasattr(self, '_messages'):
             messages = self.get_secure_cookie('bc_flash_messages')
-                self._messages = []
+            self._messages = []
             if messages:
                 self._messages = tornado.escape.json_decode(messages)
             return self._messages
-    
-    def flash(self, message, type='error'):
-        self.messages.append((type, message))
+
+    def flash(self, message, msgtype='error'):
+        self.messages.append((msgtype, message))
         self.set_secure_cookie('bc_flash_messages',
             tornado.escape.json_encode(self.messages))
 
@@ -53,6 +51,7 @@ class BaseHandler(tornado.web.RequestHandler):
         self._messages = []
         self.clear_cookie('bc_flash_messages')
         return messages
+
 
 class HomeHandler(BaseHandler):
     def get(self, filter_type=None, filter_content=None):
@@ -77,7 +76,8 @@ class DashboardHandler(BaseHandler):
         elif action == "changefeed":
             flag = self.change_feed(action_data)
             if flag:
-                self.flash_message("Feed changed successfully.")
+                self.flash_message("Feed changed successfully.",
+                    mstgype="success")
             else:
                 self.flash_message("Feed isn't changed while an error occurs.")
             self.redirect("/dashboard")
@@ -95,16 +95,17 @@ class DashboardHandler(BaseHandler):
         return feedurl in open("list.py").read()
 
 
-class FeedHandler(tornado.web.RequestHandler):
-    def __init__(self):
-        pass
+class FeedHandler(BaseHandler):
+    def get(self):
+        topics = self.db.entries.find(sort=[('updated', -1)])
+        self.render('feed.xml', topics=topics)
 
 
 urls = [
     (r'/', HomeHandler),
     (r'/dashboard', DashboardHandler),
     (r'/feed', FeedHandler),
-    ]
+]
 
 blogcenter = tornado.web.Application(urls)
 

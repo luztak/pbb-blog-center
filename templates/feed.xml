@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+    <title>{{ handler.settings['forum_title'] }}</title>
+    <link href="http://b.inkflame.org/feed" rel="self" />
+    <link href="http://b.inkflame.org/" />
+    <id>http://b.inkflame.org/</id>
+    {% for entry in entries[:15] %}
+    <entry>
+        <title><![CDATA[{{ entry['title'] }}]]></title>
+        <link href="{{ entry['url'] }}"/>
+        <id>{{ entry['url'] }}</id>
+        <content type="html">
+            <![CDATA[
+             {% raw entry['content'] %}
+            ]]>
+        </content>
+    </entry>
+    {% end %}
+</feed>
