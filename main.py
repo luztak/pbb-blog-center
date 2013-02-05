@@ -47,7 +47,7 @@ class BaseHandler(tornado.web.RequestHandler):
         self.messages.append((type, message))
         self.set_secure_cookie('bc_flash_messages',
             tornado.escape.json_encode(self.messages))
-    
+
     def get_flashed_messages(self):
         messages = self.messages
         self._messages = []
@@ -95,9 +95,16 @@ class DashboardHandler(BaseHandler):
         return feedurl in open("list.py").read()
 
 
+class FeedHandler(tornado.web.RequestHandler):
+    def __init__(self):
+        pass
+
+
 urls = [
     (r'/', HomeHandler),
-    (r'/dashboard', DashboardHandler), ]
+    (r'/dashboard', DashboardHandler),
+    (r'/feed', FeedHandler),
+    ]
 
 blogcenter = tornado.web.Application(urls)
 
